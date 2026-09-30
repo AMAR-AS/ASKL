@@ -1,8 +1,6 @@
 #pragma once
-#include "ir.h"
+#include "ast.h"
+#include <string>
 #include <vector>
-
-class CodeGenerator {
-public:
-    std::vector<int> generate(const std::vector<IRInstruction>& ir);
-};
+struct Instruction{std::string op,arg;};
+class CodeGenerator{public:std::vector<Instruction> generate(const ASTNode&);private:std::vector<Instruction>code;void emitExpression(const ASTNode&);};
