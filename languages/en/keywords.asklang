@@ -1,0 +1,12 @@
+# Ask en language pack
+language=en
+print=PRINT
+var=VAR
+let=VAR
+true=TRUE
+false=FALSE
+none=NONE
+if=IF
+else=ELSE
+while=WHILE
+return=RETURN
