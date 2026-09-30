@@ -1,0 +1,11 @@
+# Ask ja language pack
+language=ja
+表示=PRINT
+変数=VAR
+真=TRUE
+偽=FALSE
+なし=NONE
+もし=IF
+その他=ELSE
+間=WHILE
+戻る=RETURN
