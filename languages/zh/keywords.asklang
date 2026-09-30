@@ -1,0 +1,11 @@
+# Ask zh language pack
+language=zh
+打印=PRINT
+变量=VAR
+真=TRUE
+假=FALSE
+无=NONE
+如果=IF
+否则=ELSE
+当=WHILE
+返回=RETURN
