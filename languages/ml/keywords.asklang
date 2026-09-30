@@ -1,0 +1,11 @@
+# Ask ml language pack
+language=ml
+അച്ചടിക്കുക=PRINT
+ചരം=VAR
+സത്യം=TRUE
+തെറ്റ്=FALSE
+ഒന്നുമില്ല=NONE
+എങ്കിൽ=IF
+അല്ലെങ്കിൽ=ELSE
+വരെ=WHILE
+മടങ്ങുക=RETURN
