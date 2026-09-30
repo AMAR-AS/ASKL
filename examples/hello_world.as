@@ -1,1 +1,1 @@
-print("Hello, AskLang!");
+print("Hello, Ask!");
