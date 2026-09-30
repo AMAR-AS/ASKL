@@ -1,14 +1,4 @@
 #include "codegen.h"
-
-std::vector<int> CodeGenerator::generate(const std::vector<IRInstruction>& ir) {
-    std::vector<int> bytecode;
-    bytecode.push_back(255); // HALT
-    return bytecode;
-}
-void Codegen::visitPrint(ASTPrint* node) {
-    // First, generate code for the expression (value to print)
-    node->expr->accept(*this);
-
-    // Then emit a print instruction
-    emit(OP_PRINT);
-}
+#include <stdexcept>
+void CodeGenerator::emitExpression(const ASTNode&n){if(n.nodeType=="Number"||n.nodeType=="String"||n.nodeType=="Bool"||n.nodeType=="None"){code.push_back({n.nodeType=="Number"?"CONST":n.nodeType=="String"?"CONST_STR":n.nodeType=="Bool"?"CONST_BOOL":"CONST_NONE",n.value});return;}if(n.nodeType=="Identifier"){code.push_back({"LOAD",n.value});return;}if(n.nodeType=="Assign"){emitExpression(*n.children[0]);code.push_back({"STORE",n.value});return;}if(n.nodeType=="Unary"){emitExpression(*n.children[0]);code.push_back({n.value=="-"?"NEG":"NOT",""});return;}if(n.nodeType=="Binary"){emitExpression(*n.children[0]);emitExpression(*n.children[1]);const auto&o=n.value;code.push_back({o=="+"?"ADD":o=="-"?"SUB":o=="*"?"MUL":o=="/"?"DIV":o=="%"?"MOD":o=="=="?"EQ":o=="!="?"NE":o=="<"?"LT":o==">"?"GT":o=="<="?"LE":"GE",""});return;}throw std::runtime_error("Unsupported AST node: "+n.nodeType);}
+std::vector<Instruction>CodeGenerator::generate(const ASTNode&r){code.clear();for(const auto&n:r.children){if(n->nodeType=="Print"){emitExpression(*n->children[0]);code.push_back({"PRINT",""});}else if(n->nodeType=="VarDecl"){if(n->children.empty())code.push_back({"CONST_NONE",""});else emitExpression(*n->children[0]);code.push_back({"STORE",n->value});}else emitExpression(*n);}code.push_back({"HALT",""});return code;}
