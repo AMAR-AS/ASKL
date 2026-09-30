@@ -155,15 +155,15 @@ Ask follows a conventional compiler pipeline while keeping multilingual syntax i
 
 **Ask is an early-stage language and compiler project.**
 
-The repository contains an architectural foundation and experimental implementations across lexer, parser, AST, semantic analysis, IR, optimization, code generation, VM, runtime, examples, and tests.
+The repository now includes an executable compiler foundation: multilingual lexer/language packs, canonical AST parsing, bytecode generation, and a working stack VM for the foundation language subset. Semantic analysis, richer IR, control flow, standard library, and native backends remain active development areas.
 
 Historical prototypes contain syntax differences such as **def / func / fcn** and **ret / return**. These are implementation-history artifacts until resolved by the canonical language specification.
 
 ## Development priorities
 
 1. **Canonical language specification**
-2. **Multilingual frontend and language packs**
-3. **End-to-end .as execution**
+2. **Multilingual frontend and language packs** — foundation implemented
+3. **End-to-end .as execution** — foundation subset executable
 4. **Stable runtime and standard library**
 5. **Native platform backends**
 6. **CLI, formatter, linter, REPL, debugger and package tooling**
