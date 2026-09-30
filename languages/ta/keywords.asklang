@@ -1,0 +1,11 @@
+# Ask ta language pack
+language=ta
+அச்சிடு=PRINT
+மாறி=VAR
+உண்மை=TRUE
+பொய்=FALSE
+இல்லை=NONE
+என்றால்=IF
+இல்லையெனில்=ELSE
+வரை=WHILE
+திரும்பு=RETURN
