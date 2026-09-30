@@ -23,6 +23,8 @@ Ask has one semantic language and multiple human-language surface forms. `.askla
 - Unary `-` and `!`.
 - Parenthesized expressions.
 - `print(...)`.
+- `if` / `else` blocks.
+- `while` blocks.
 - Semicolon-terminated statements.
 - Mixed-language keyword spelling in one file.
 
@@ -30,7 +32,7 @@ Ask has one semantic language and multiple human-language surface forms. `.askla
 
 `PRINT`, `VAR`, `TRUE`, `FALSE`, `NONE`, `IF`, `ELSE`, `WHILE`, `RETURN`.
 
-The control-flow tokens are reserved by the frontend while their full statement semantics are implemented in later milestones.
+The current executable subset implements `if`, `else`, and `while`; `return` is reserved for the function milestone.
 
 ## Reserved project words
 
