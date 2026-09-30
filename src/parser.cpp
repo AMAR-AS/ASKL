@@ -1,15 +1,12 @@
 #include "parser.h"
-
-ASTNode* Parser::parse(const std::vector<Token>& tokens) {
-    if (tokens.empty()) return nullptr;
-    ASTNode* root = new ASTNode("Program");
-    for (auto& tok : tokens) {
-        root->children.push_back(new ASTNode("Identifier", tok.value));
-    }
-    return root;
-}
-if (match(TokenType::PRINT)) {
-    Expr* value = expression();
-    consume(TokenType::SEMICOLON, "Expect ';' after value.");
-    return new PrintStmt(value);
-}
+#include <stdexcept>
+const Token&Parser::peek()const{return(*tokens)[current];}const Token&Parser::previous()const{return(*tokens)[current-1];}bool Parser::check(const std::string&t)const{return peek().type==t;}bool Parser::match(const std::string&t){if(!check(t))return false;++current;return true;}const Token&Parser::consume(const std::string&t,const char*m){if(check(t))return(*tokens)[current++];throw std::runtime_error(std::string(m)+" at "+std::to_string(peek().line)+":"+std::to_string(peek().column));}
+std::unique_ptr<ASTNode>Parser::parse(const std::vector<Token>&ts){tokens=&ts;current=0;auto r=std::make_unique<ASTNode>("Program");while(!check("EOF"))r->children.push_back(statement());return r;}
+std::unique_ptr<ASTNode>Parser::statement(){if(match("PRINT")){auto n=std::make_unique<ASTNode>("Print");consume("(","Expect '(' after print.");n->children.push_back(expression());consume(")","Expect ')' after print.");consume(";","Expect ';' after print.");return n;}if(match("VAR")){auto q=consume("IDENT","Expect identifier after var.");auto n=std::make_unique<ASTNode>("VarDecl",q.value);if(match("="))n->children.push_back(expression());consume(";","Expect ';' after declaration.");return n;}auto n=expression();consume(";","Expect ';' after expression.");return n;}
+std::unique_ptr<ASTNode>Parser::expression(){return assignment();}std::unique_ptr<ASTNode>Parser::assignment(){auto n=equality();if(match("=")){if(n->nodeType!="Identifier")throw std::runtime_error("Invalid assignment target.");auto a=std::make_unique<ASTNode>("Assign",n->value);a->children.push_back(assignment());return a;}return n;}
+std::unique_ptr<ASTNode>Parser::equality(){auto n=comparison();while(check("==")||check("!=")){auto op=peek().type;++current;auto r=comparison();auto b=std::make_unique<ASTNode>("Binary",op);b->children.push_back(std::move(n));b->children.push_back(std::move(r));n=std::move(b);}return n;}
+std::unique_ptr<ASTNode>Parser::comparison(){auto n=term();while(check("<")||check(">")||check("<=")||check(">=")){auto op=peek().type;++current;auto r=term();auto b=std::make_unique<ASTNode>("Binary",op);b->children.push_back(std::move(n));b->children.push_back(std::move(r));n=std::move(b);}return n;}
+std::unique_ptr<ASTNode>Parser::term(){auto n=factor();while(check("+")||check("-")){auto op=peek().type;++current;auto r=factor();auto b=std::make_unique<ASTNode>("Binary",op);b->children.push_back(std::move(n));b->children.push_back(std::move(r));n=std::move(b);}return n;}
+std::unique_ptr<ASTNode>Parser::factor(){auto n=unary();while(check("*")||check("/")||check("%")){auto op=peek().type;++current;auto r=unary();auto b=std::make_unique<ASTNode>("Binary",op);b->children.push_back(std::move(n));b->children.push_back(std::move(r));n=std::move(b);}return n;}
+std::unique_ptr<ASTNode>Parser::unary(){if(check("!")||check("-")){auto op=peek().type;++current;auto n=std::make_unique<ASTNode>("Unary",op);n->children.push_back(unary());return n;}return primary();}
+std::unique_ptr<ASTNode>Parser::primary(){if(match("NUMBER"))return std::make_unique<ASTNode>("Number",previous().value);if(match("STRING"))return std::make_unique<ASTNode>("String",previous().value);if(match("TRUE"))return std::make_unique<ASTNode>("Bool","true");if(match("FALSE"))return std::make_unique<ASTNode>("Bool","false");if(match("NONE"))return std::make_unique<ASTNode>("None");if(match("IDENT"))return std::make_unique<ASTNode>("Identifier",previous().value);if(match("(")){auto n=expression();consume(")","Expect ')' after expression.");return n;}throw std::runtime_error("Expect expression at "+std::to_string(peek().line)+":"+std::to_string(peek().column));}
