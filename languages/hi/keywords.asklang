@@ -1,0 +1,11 @@
+# Ask hi language pack
+language=hi
+प्रिंट=PRINT
+चर=VAR
+सत्य=TRUE
+असत्य=FALSE
+कुछनहीं=NONE
+अगर=IF
+वरना=ELSE
+जबतक=WHILE
+लौटो=RETURN
