@@ -1,0 +1,11 @@
+# Ask kn language pack
+language=kn
+ಮುದ್ರಿಸು=PRINT
+ಚರ=VAR
+ಸತ್ಯ=TRUE
+ಸುಳ್ಳು=FALSE
+ಯಾವುದೂಇಲ್ಲ=NONE
+ಆಗ=IF
+ಇಲ್ಲದಿದ್ದರೆ=ELSE
+ಇರುವವರೆಗೆ=WHILE
+ಹಿಂತಿರುಗು=RETURN
