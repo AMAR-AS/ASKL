@@ -1,25 +1,5 @@
 #include "ir.h"
 #include <iostream>
-
-void IRGenerator::generate(ASTNode* root) {
-    if (!root) return;
-    if (root->nodeType == "Identifier") {
-        IRInstruction instr = {"LOAD", root->value, "", "t" + std::to_string(instructions.size())};
-        instructions.push_back(instr);
-    }
-    for (auto child : root->children) {
-        generate(child);
-    }
-}
-
-void IRGenerator::printIR() {
-    for (auto& instr : instructions) {
-        std::cout << instr.op << " " << instr.arg1 
-                  << " " << instr.arg2 << " -> " 
-                  << instr.result << std::endl;
-    }
-}
-
-std::vector<IRInstruction> IRGenerator::getIR() {
-    return instructions;
-}
+void IRGenerator::generate(ASTNode* root){(void)root;instructions.clear();}
+void IRGenerator::printIR(){for(const auto&i:instructions)std::cout<<i.op<<" "<<i.arg1<<" "<<i.arg2<<" -> "<<i.result<<"\n";}
+std::vector<IRInstruction>IRGenerator::getIR(){return instructions;}
