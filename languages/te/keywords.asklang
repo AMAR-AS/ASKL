@@ -1,0 +1,11 @@
+# Ask te language pack
+language=te
+ముద్రించు=PRINT
+చర=VAR
+నిజం=TRUE
+అబద్ధం=FALSE
+ఏదీ=NONE
+అయితే=IF
+లేకపోతే=ELSE
+వరకు=WHILE
+తిరిగి=RETURN
